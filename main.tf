@@ -10,7 +10,7 @@ terraform {
 provider "snowflake" {
   alias = "security_admin"
   role  = "SECURITYADMIN"
-} 
+}
 
 resource "snowflake_database" "db" {
   name = "TF_DEMO"
