@@ -12,7 +12,7 @@ terraform {
 provider "snowflake" {
   organization_name      = "RBOEJDQ" # required if not using profile. Can also be set via SNOWFLAKE_ORGANIZATION_NAME env var
   account_name           = "UC52363" # required if not using profile. Can also be set via SNOWFLAKE_ACCOUNT_NAME env var
-  user                   = "" # required if not using profile or token. Can also be set via SNOWFLAKE_USER env var
+  user                   = ""        # required if not using profile or token. Can also be set via SNOWFLAKE_USER env var
   authenticator          = "SNOWFLAKE_JWT"
   private_key            = file("~/.ssh/snowflake_key.p8")
   private_key_passphrase = var.private_key_passphrase
