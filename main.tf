@@ -24,6 +24,10 @@ variable "private_key_passphrase" {
   sensitive = true
 }
 
+provider "snowflake" {
+  role = "SYSADMIN"
+}
+
 resource "snowflake_database" "db" {
   name = "TF_DEMO"
 }
@@ -34,6 +38,10 @@ resource "snowflake_warehouse" "warehouse" {
   auto_suspend   = 60
 }
 
+provider "snowflake" {
+  alias = "security_admin"
+  role  = "SECURITYADMIN"
+}
 
 
 resource "snowflake_role" "role" {
