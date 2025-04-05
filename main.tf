@@ -1,17 +1,28 @@
 terraform {
   required_providers {
     snowflake = {
-      source  = "Snowflake-Labs/snowflake"
-      version = "~> 0.87"
+      source = "Snowflake-Labs/snowflake"
     }
   }
 }
 
+
+
+# A simple configuration of the provider with private key authentication.
 provider "snowflake" {
-  alias = "security_admin"
-  role  = "SECURITYADMIN"
+  organization_name      = "RBOEJDQ" # required if not using profile. Can also be set via SNOWFLAKE_ORGANIZATION_NAME env var
+  account_name           = "UC52363" # required if not using profile. Can also be set via SNOWFLAKE_ACCOUNT_NAME env var
+  user                   = ""        # required if not using profile or token. Can also be set via SNOWFLAKE_USER env var
+  authenticator          = "SNOWFLAKE_JWT"
+  private_key            = file("~/.ssh/snowflake_key.p8")
+  private_key_passphrase = var.private_key_passphrase
 }
 
+# Remember to provide the passphrase securely.
+variable "private_key_passphrase" {
+  type      = string
+  sensitive = true
+}
 
 
 resource "snowflake_database" "db" {
@@ -23,6 +34,12 @@ resource "snowflake_warehouse" "warehouse" {
   warehouse_size = "xsmall"
   auto_suspend   = 60
 }
+
+provider "snowflake" {
+  alias = "security_admin"
+  role  = "SECURITYADMIN"
+}
+
 
 resource "snowflake_role" "role" {
   provider = snowflake.security_admin
