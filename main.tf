@@ -10,9 +10,9 @@ terraform {
 
 # A simple configuration of the provider with private key authentication.
 provider "snowflake" {
-  organization_name      = "..." # required if not using profile. Can also be set via SNOWFLAKE_ORGANIZATION_NAME env var
-  account_name           = "..." # required if not using profile. Can also be set via SNOWFLAKE_ACCOUNT_NAME env var
-  user                   = "..." # required if not using profile or token. Can also be set via SNOWFLAKE_USER env var
+  organization_name      = "RBOEJDQ" # required if not using profile. Can also be set via SNOWFLAKE_ORGANIZATION_NAME env var
+  account_name           = "UC52363" # required if not using profile. Can also be set via SNOWFLAKE_ACCOUNT_NAME env var
+  user                   = "" # required if not using profile or token. Can also be set via SNOWFLAKE_USER env var
   authenticator          = "SNOWFLAKE_JWT"
   private_key            = file("~/.ssh/snowflake_key.p8")
   private_key_passphrase = var.private_key_passphrase
@@ -22,16 +22,6 @@ provider "snowflake" {
 variable "private_key_passphrase" {
   type      = string
   sensitive = true
-}
-
-# By using the `profile` field, missing fields will be populated from ~/.snowflake/config TOML file
-provider "snowflake" {
-  profile = "securityadmin"
-}
-
-provider "snowflake" {
-  alias = "security_admin"
-  role  = "SECURITYADMIN"
 }
 
 resource "snowflake_database" "db" {
