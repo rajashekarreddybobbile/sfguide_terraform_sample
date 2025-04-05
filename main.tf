@@ -1,11 +1,24 @@
 terraform {
-  required_version = ">= 1.0.0"
   required_providers {
     snowflake = {
-      source  = "snowflake-labs/snowflake"
-      version = "0.84.1"
+      source  = "Snowflake-Labs/snowflake"
+      version = "~> 0.87"
     }
   }
+}
+
+provider "snowflake" {
+  role = "SYSADMIN"
+}
+
+resource "snowflake_database" "db" {
+  name = "TF_DEMO"
+}
+
+resource "snowflake_warehouse" "warehouse" {
+  name           = "TF_DEMO"
+  warehouse_size = "xsmall"
+  auto_suspend   = 60
 }
 
 provider "snowflake" {
